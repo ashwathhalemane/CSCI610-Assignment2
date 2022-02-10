@@ -4,22 +4,101 @@ function myLine (x1, y1, x2, y2)
   // using only calls to point().
   
   // your code should implement the Midpoint algorithm
-  let dE, dNE,d;
-  let dy = y2-y1;
-  let dx = x2-x1;
-  dE = 2*dy;
-  dNE = 2*(dy-dx);
-  d = dE - dx;
-
-  for(let x = x1, y = y1; x<=x2; ++x){
-    point(x,y);
-    if(d<=0){
-      d+=dE;
+  // drawing for all quadrants
+  if(x2>x1){
+    if(y2>=y1){
+      let dE, dNE,d;
+      let dy = y2-y1;
+      let dx = x2-x1;
+      dE = 2*dy;
+      dNE = 2*(dy-dx);
+      d = dE - dx;
+  
+      for(let x = x1, y = y1; x<=x2; ++x){
+        point(x,y);
+        if(d<=0){
+          d+=dE;
+        }else{
+          ++y;
+          d+=dNE;
+        }
+      }
     }else{
-      ++y;
-      d+=dNE;
+      let dx = x2-x1;
+      y2 = 2*y1-y2;
+      let dy = y2-y1;
+      let dE = 2*dy;
+      let dNE = 2*(dy-dx);
+      let d = dE - dx;
+  
+      for(let x = x1, y = y1; x<=x2; ++x){
+        point(x,2*y1-y);
+        if(d<=0){
+          d+=dE;
+        }else{
+          ++y;
+          d+=dNE;
+        }
+      }
+
     }
+    
+  }else if(x2<x1){
+    if(y2>=y1){
+      x2=2*x1-x2;
+      let dx = x2-x1;
+      let dy = y2-y1;
+      let dE = 2*dy;
+      let dNE = 2*(dy-dx);
+      let d = dE - dx;
+  
+      for(let x = x1, y = y1; x<=x2; ++x){
+        point(2*x1 - x,y);
+        if(d<=0){
+          d+=dE;
+        }else{
+          ++y;
+          d+=dNE;
+        }
+      }
+    }
+    else{
+      // [a, b] = [b, a]; swapping x and y points usign js 
+      [x1, x2] = [x2, x1];
+      [y1, y2] = [y2, y1];
+      let dx = x2-x1;
+      let dy = y2-y1;
+      let dE = 2*dy;
+      let dNE = -1 * dx;
+      let d = dE - dx;
+
+      for(let x = x1, y = y1; x<=x2; ++x){
+        point(x,y);
+        if(d<=0){
+          d+=dE;
+        }else{
+          ++y;
+          d+=dNE;
+        }
+      }
+    }
+  }else if(x2 == x1){ //drawing line on y-axis
+    if(y2>y1){
+      dy=y2-y1;
+      x=x1;
+      for(let i=0;i<=dy;i++){
+          point(x,y1+i); //incrementing i on y-axis from 0 to dy or we can do y1 to y2
+      }
+  } else{
+      dy=y1-y2;
+      x=x1;
+      for(let i=0;i<=dy;i++){
+          point(x,y1-i);
+      }
   }
+  }
+
+  
 }
 
 //first point p(x0,y0), second point p(x1,y1) other point p(x,y)
